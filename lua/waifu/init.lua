@@ -10,7 +10,10 @@ M.setup = function(opts)
 
   -- Create a virtual environment named "venv" in the current directory
   local python_dir = vim.api.nvim_eval('expand("~/.local/share/nvim/lazy/waifu.nvim/venv/")')
-  if not vim.fn.isdirectory(python_dir) then
+  
+  local does_python_dir_exist = vim.fn.isdirectory(python_dir)
+  print(does_python_dir_exist)
+  if not does_python_dir_exist then
     vim.fn.system("python3 -m venv " .. python_dir)
 
    -- Activate the virtual environment
