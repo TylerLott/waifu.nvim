@@ -38,7 +38,6 @@ M.setup = function(opts)
   -- Run the Python script
   local script = vim.fn.glob(data_path .. '/*/waifu.nvim/waifu.py')
   M.script = script
-  print(script)
   vim.fn.system("python3 " .. M.script .. M.format_args())
 
   -- Deactivate the virtual environment
@@ -101,6 +100,7 @@ M.format_args = function()
   args = args .. " -c " .. M.crop
   args = args .. " -x " .. M.width
   args = args .. " -y " .. M.height
+  return args
 end
 
 M.reload_waifu = function()
