@@ -7,6 +7,7 @@ M.setup = function(opts)
   local data_path = vim.fn.stdpath("data")
 
   local cascade_paths = vim.fn.glob(data_path .. "/*/waifu.nvim/lbp_anime_face_detect.xml")
+  print(cascade_paths)
   for _, cascade in ipairs(cascade_paths) do
     M.cascade = cascade
   end
