@@ -108,7 +108,7 @@ end
 
 M.format_args = function()
   local args = " -i " .. M.img_dir 
-  args = args .. " -x " .. M.cascade
+  args = args .. " -z " .. M.cascade
   args = args .. " -t " .. M.type
   args = args .. " -c " .. M.category 
   args = args .. " -b " .. M.blending
