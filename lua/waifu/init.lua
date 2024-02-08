@@ -30,7 +30,7 @@ M.setup = function(opts)
 
   -- Run the Python script
   M.script = vim.api.nvim_eval('expand("~/.local/share/nvim/lazy/waifu.nvim/waifu.py")')
-  print("% expanded: " .. vim.fn.expand('%:p:h'))
+  print("std path: " .. vim.fn.stdpath('data'))
   vim.fn.system("python3 " .. M.script .. M.format_args())
 
   -- Deactivate the virtual environment
