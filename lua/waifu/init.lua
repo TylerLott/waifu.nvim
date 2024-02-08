@@ -10,10 +10,8 @@ M.setup = function(opts)
 
   -- Create a virtual environment named "venv" in the current directory
   local python_dir = vim.api.nvim_eval('expand("~/.local/share/nvim/lazy/waifu.nvim/venv/")')
-  
-  local does_python_dir_exist = vim.fn.isdirectory(python_dir)
-  print(does_python_dir_exist)
-  if does_python_dir_exist == 0 then
+
+  if vim.fn.isdirectory(python_dir) == 0 then
     vim.fn.system("python3 -m venv " .. python_dir)
 
    -- Activate the virtual environment
@@ -35,7 +33,6 @@ M.setup = function(opts)
   vim.fn.system("python3 " .. M.script .. M.format_args())
 
   -- Deactivate the virtual environment
-  print("deactivating pyenv")
   vim.fn.system("deactivate")
 
 end
