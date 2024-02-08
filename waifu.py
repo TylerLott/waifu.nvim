@@ -15,7 +15,7 @@ API_FOR_WAIFUS = "https://api.waifu.pics/"
 parser = argparse.ArgumentParser(description="A tool to set your iterm2 background to a new waifu each day")
 
 # Define command-line arguments
-parser.add_argument("-p",  "--img_dir", type=str, default=os.path.expanduser("~/Desktop/waifus"), help="path to dir for saving images")
+parser.add_argument("-i",  "--img_dir", type=str, default=os.path.expanduser("~/Desktop/waifus"), help="path to dir for saving images")
 parser.add_argument("-z", "--cascade", type=str, default=os.path.expanduser("~/.local/share/nvim/lazy/waifu.nvim/lbp_anime_face_detect.xml"), help="path to cascade classifier sheet for face detection")
 parser.add_argument("-t", "--type", type=str, choices=["sfw", "nsfw"], help="Type of waifu (safe for work or not)", default="sfw")
 parser.add_argument("-c", "--category", type=str, choices=["waifu", "neko", "shinobu","megumin","bully","cuddle","cry","hug","awoo",

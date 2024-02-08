@@ -7,7 +7,6 @@ M.setup = function(opts)
   local data_path = vim.fn.stdpath("data")
 
   local cascade = vim.fn.glob(data_path .. "/*/waifu.nvim/lbp_anime_face_detect.xml")
-  print(cascade)
   M.cascade = cascade
 
   local cache_path = vim.fn.stdpath("cache") .. "/waifu_nvim"
@@ -38,7 +37,6 @@ M.setup = function(opts)
 
   -- Run the Python script
   local script = vim.fn.glob(data_path .. '/*/waifu.nvim/waifu.py')
-  print(script)
   M.script = script
   vim.fn.system("python3 " .. M.script .. M.format_args())
 
@@ -66,17 +64,31 @@ M.set_args = function(opts)
   else
     M.blending = 0.15
   end
+
+
+
+    
 end
 
 M.format_args = function()
-  return " --img_dir " .. M.img_dir .. " --cascade " .. M.cascade
+  local args = " -i " .. M.img_dir 
+  args = args .. " -x " .. M.cascade
+  args = args .. " -t " .. M.type
+  args = args .. " -c " .. M.category 
+  args = args .. " -b " .. M.blending
+  args = args .. " -m " .. M.image_mode 
+  args = args .. " -c " .. M.crop
+  args = args .. " -x " .. M.width
+  args = args .. " -y " .. M.height
 end
 
 M.reload_waifu = function()
   print("loading waifu")
   vim.fn.system("source venv/bin/activate")
-  vim.fn.system("python3 " .. M.script_name .. " -g 1")
+  vim.fn.system("python3 " .. M.script .. M.format_args() .. " -g 1")
   vim.fn.system("deactivate")
 end
+
+vim.cmd([[command! NewWaifu lua M.reload_waifu()]])
 
 return M
