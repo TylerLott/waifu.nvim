@@ -23,7 +23,8 @@ M.setup = function(opts)
   else 
    -- Activate the virtual environment
     print("starting pyenv")
-    vim.fn.system("source venv/bin/activate")
+    local output = vim.fn.system("source venv/bin/activate")
+    print("output " .. output)
   end
 
   -- Run the Python script
