@@ -1,5 +1,11 @@
 local M = {}
 
+M.P = function(value)
+  if M.debug == true then
+    print(value)
+  end
+end
+
 M.setup = function(opts)
 
   M.set_args(opts)
@@ -19,6 +25,7 @@ M.setup = function(opts)
   
   -- Activate virtual env
   if vim.fn.isdirectory(M.python_dir) == 0 then
+    M.P("Creating new venv")
     vim.fn.system("python3 -m venv " .. M.python_dir)
 
    -- Activate the virtual environment
@@ -32,11 +39,14 @@ M.setup = function(opts)
 
   else 
    -- Activate the virtual environment
+    M.P("Using existing venv")
     vim.fn.system("source " .. M.python_dir .. "bin/activate")
   end
 
   -- Run the Python script
   M.script = vim.fn.glob(data_path .. '/*/waifu.nvim/waifu.py')
+  M.P("Running script from " .. M.script)
+  M.P("Running with args: " .. M.format_args())
   vim.fn.system("python3 " .. M.script .. M.format_args())
 
   -- Deactivate the virtual environment
@@ -46,6 +56,12 @@ end
 
 
 M.set_args = function(opts)
+  if opts["debug"] then
+    M.debug = opts["debug"]
+  else
+    M.debug = false
+  end
+
   if opts["type"] then
     M.type = opts["type"]
   else
@@ -107,6 +123,7 @@ M.reload_waifu = function()
   vim.fn.system("source " .. M.python_dir .. "bin/activate")
   vim.fn.system("python3 " .. M.script .. M.format_args() .. " -g 1")
   vim.fn.system("deactivate")
+  print("done loading waifu")
 end
 
 vim.cmd([[command! NewWaifu lua require'waifu'.reload_waifu()]])
