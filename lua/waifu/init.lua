@@ -107,13 +107,13 @@ M.set_args = function(opts)
 end
 
 M.format_args = function()
-  local args = " -i " .. M.img_dir 
+  local args = " -i " .. M.img_dir
   args = args .. " -z " .. M.cascade
   args = args .. " -t " .. M.type
-  args = args .. " -c " .. M.category 
+  args = args .. " -c " .. M.category
   args = args .. " -b " .. M.blending
-  args = args .. " -m " .. M.image_mode 
-  args = args .. " -c " .. M.crop
+  args = args .. " -m " .. M.image_mode
+  args = args .. " -r " .. M.crop
   args = args .. " -x " .. M.width
   args = args .. " -y " .. M.height
   return args
