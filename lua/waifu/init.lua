@@ -6,11 +6,9 @@ M.setup = function(opts)
 
   local data_path = vim.fn.stdpath("data")
 
-  local cascade_paths = vim.fn.glob(data_path .. "/*/waifu.nvim/lbp_anime_face_detect.xml")
-  print(cascade_paths)
-  for _, cascade in ipairs(cascade_paths) do
-    M.cascade = cascade
-  end
+  local cascade = vim.fn.glob(data_path .. "/*/waifu.nvim/lbp_anime_face_detect.xml")
+  print(cascade)
+  M.cascade = cascade
 
   local cache_path = vim.fn.stdpath("cache") .. "/waifu_nvim"
   if vim.fn.isdirectory(cache_path) == 0 then
@@ -39,10 +37,9 @@ M.setup = function(opts)
   end
 
   -- Run the Python script
-  local scripts = vim.fn.glob(data_path .. '/*/waifu.nvim/waifu.py')
-  for _, script in ipairs(scripts) do
-    M.script = script
-  end
+  local script = vim.fn.glob(data_path .. '/*/waifu.nvim/waifu.py')
+  print(script)
+  M.script = script
   vim.fn.system("python3 " .. M.script .. M.format_args())
 
   -- Deactivate the virtual environment
