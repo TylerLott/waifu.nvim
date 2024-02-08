@@ -15,14 +15,14 @@ M.setup = function(opts)
   end
 
   M.img_dir = cache_path .. "/waifus"
-  local python_dir = cache_path .. "/venv"
+  M.python_dir = cache_path .. "/venv"
   
   -- Activate virtual env
-  if vim.fn.isdirectory(python_dir) == 0 then
-    vim.fn.system("python3 -m venv " .. python_dir)
+  if vim.fn.isdirectory(M.python_dir) == 0 then
+    vim.fn.system("python3 -m venv " .. M.python_dir)
 
    -- Activate the virtual environment
-    vim.fn.system("source " .. python_dir .. "bin/activate")
+    vim.fn.system("source " .. M.python_dir .. "bin/activate")
 
     -- Install dependencies (if any) from requirements.txt
     vim.fn.system("pip install -r requirements.txt")
@@ -32,12 +32,11 @@ M.setup = function(opts)
 
   else 
    -- Activate the virtual environment
-    vim.fn.system("source " .. python_dir .. "bin/activate")
+    vim.fn.system("source " .. M.python_dir .. "bin/activate")
   end
 
   -- Run the Python script
-  local script = vim.fn.glob(data_path .. '/*/waifu.nvim/waifu.py')
-  M.script = script
+  M.script = vim.fn.glob(data_path .. '/*/waifu.nvim/waifu.py')
   vim.fn.system("python3 " .. M.script .. M.format_args())
 
   -- Deactivate the virtual environment
@@ -105,7 +104,7 @@ end
 
 M.reload_waifu = function()
   print("loading waifu")
-  vim.fn.system("source venv/bin/activate")
+  vim.fn.system("source " .. M.python_dir .. "bin/activate")
   vim.fn.system("python3 " .. M.script .. M.format_args() .. " -g 1")
   vim.fn.system("deactivate")
 end
