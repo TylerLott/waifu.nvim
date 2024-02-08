@@ -17,21 +17,20 @@ M.setup = function(opts)
     vim.fn.system("python3 -m venv " .. python_dir)
 
    -- Activate the virtual environment
-    print("starting pyenv")
     vim.fn.system("source " .. python_dir .. "bin/activate")
 
     -- Install dependencies (if any) from requirements.txt
     vim.fn.system("pip install -r requirements.txt")
 
+    -- Make waifus dir if not exists
+    vim.fn.mkdir(M.img_dir)
+
   else 
    -- Activate the virtual environment
-    print("starting pyenv")
-    local output = vim.fn.system("source " .. python_dir .. "bin/activate")
-    print("output " .. output)
+    vim.fn.system("source " .. python_dir .. "bin/activate")
   end
 
   -- Run the Python script
-  print("running script")
   M.script = vim.api.nvim_eval('expand("~/.local/share/nvim/lazy/waifu.nvim/waifu.py")')
   vim.fn.system("python3 " .. M.script .. M.format_args())
 
