@@ -37,7 +37,7 @@ M.set_args = function(opts)
   if opts["img_dir"] then
     M.img_dir = opts["img_dir"]
   else 
-    M.img_dir = vim.api.nvim_eval('expand("~/.local/share/nvim/lazy/waifu/waifus/")') 
+    M.img_dir = vim.api.nvim_eval('expand("~/.local/share/nvim/lazy/waifu.nvim/waifus/")') 
   end
 
   if opts["type"] then
