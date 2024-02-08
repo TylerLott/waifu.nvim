@@ -14,6 +14,7 @@ M.setup = function(opts)
     vim.fn.system("python3 -m venv venv")
 
    -- Activate the virtual environment
+    print("starting pyenv")
     vim.fn.system("source venv/bin/activate")
 
     -- Install dependencies (if any) from requirements.txt
@@ -21,13 +22,16 @@ M.setup = function(opts)
 
   else 
    -- Activate the virtual environment
+    print("starting pyenv")
     vim.fn.system("source venv/bin/activate")
   end
 
   -- Run the Python script
+  print("running script")
   vim.fn.system("python3 " .. M.script_name .. M.format_args(opts))
 
   -- Deactivate the virtual environment
+  print("deactivating pyenv")
   vim.fn.system("deactivate")
 
 end
@@ -64,8 +68,9 @@ M.format_args = function()
 end
 
 M.reload_waifu = function()
+  print("loading waifu")
   vim.fn.system("source venv/bin/activate")
-  vim.fn.system("python3 " .. M.script_name .. " " .. M.format_args(opts) .. " -g 1")
+  vim.fn.system("python3 " .. M.script_name .. " -g 1")
   vim.fn.system("deactivate")
 end
 
