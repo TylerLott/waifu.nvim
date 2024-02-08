@@ -68,7 +68,7 @@ def crop_face(file_path):
     img = cv2.imread(file_path)
     img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     img_gray = cv2.equalizeHist(img_gray) 
-    face_cascade = cv2.CascadeClassifier(args["cascade"])
+    face_cascade = cv2.CascadeClassifier(args.cascade)
     faces = face_cascade.detectMultiScale(img_gray)
 
     face_bounds = 500

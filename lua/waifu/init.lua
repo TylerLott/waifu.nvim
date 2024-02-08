@@ -2,15 +2,24 @@ local M = {}
 
 M.setup = function(opts)
 
-  -- create args on M from opts and defaults
-
-  -- create venv if needed
-  -- Specify the name of your Python script
   M.set_args(opts)
 
-  -- Create a virtual environment named "venv" in the current directory
-  local python_dir = vim.api.nvim_eval('expand("~/.local/share/nvim/lazy/waifu.nvim/venv/")')
+  local data_path = vim.fn.stdpath("data")
 
+  local cascade_paths = vim.fn.glob(data_path .. "/*/waifu.nvim/lbp_anime_face_detect.xml")
+  for _, cascade in ipairs(cascade_paths) do
+    M.cascade = cascade
+  end
+
+  local cache_path = vim.fn.stdpath("cache") .. "/waifu_nvim"
+  if vim.fn.isdirectory(cache_path) == 0 then
+    vim.fn.mkdir(cache_path)
+  end
+
+  M.img_dir = cache_path .. "/waifus"
+  local python_dir = cache_path .. "/venv"
+  
+  -- Activate virtual env
   if vim.fn.isdirectory(python_dir) == 0 then
     vim.fn.system("python3 -m venv " .. python_dir)
 
@@ -29,8 +38,10 @@ M.setup = function(opts)
   end
 
   -- Run the Python script
-  M.script = vim.api.nvim_eval('expand("~/.local/share/nvim/lazy/waifu.nvim/waifu.py")')
-  print("std path: " .. vim.fn.stdpath('data'))
+  local scripts = vim.fn.glob(data_path .. '/*/waifu.nvim/waifu.py')
+  for _, script in ipairs(scripts) do
+    M.script = script
+  end
   vim.fn.system("python3 " .. M.script .. M.format_args())
 
   -- Deactivate the virtual environment
@@ -40,12 +51,6 @@ end
 
 
 M.set_args = function(opts)
-  if opts["img_dir"] then
-    M.img_dir = opts["img_dir"]
-  else 
-    M.img_dir = vim.api.nvim_eval('expand("~/.local/share/nvim/lazy/waifu.nvim/waifus/")') 
-  end
-
   if opts["type"] then
     M.type = opts["type"]
   else
@@ -66,7 +71,7 @@ M.set_args = function(opts)
 end
 
 M.format_args = function()
-  return " --img_dir " .. M.img_dir
+  return " --img_dir " .. M.img_dir .. " --cascade " .. M.cascade
 end
 
 M.reload_waifu = function()
