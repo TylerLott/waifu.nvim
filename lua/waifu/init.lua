@@ -47,7 +47,8 @@ M.setup = function(opts)
   M.script = vim.fn.glob(data_path .. '/*/waifu.nvim/waifu.py')
   M.P("Running script from " .. M.script)
   M.P("Running with args: " .. M.format_args())
-  vim.fn.system("python3 " .. M.script .. M.format_args())
+  local output = vim.fn.system("python3 " .. M.script .. M.format_args())
+  M.P("Script output: " .. output)
 
   -- Deactivate the virtual environment
   vim.fn.system("deactivate")
