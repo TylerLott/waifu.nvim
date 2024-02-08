@@ -13,7 +13,7 @@ M.setup = function(opts)
   
   local does_python_dir_exist = vim.fn.isdirectory(python_dir)
   print(does_python_dir_exist)
-  if not does_python_dir_exist then
+  if does_python_dir_exist == 0 then
     vim.fn.system("python3 -m venv " .. python_dir)
 
    -- Activate the virtual environment
