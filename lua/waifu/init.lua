@@ -65,9 +65,29 @@ M.set_args = function(opts)
     M.blending = 0.15
   end
 
+  if opts["image_mode"] then
+    M.image_mode = opts["image_mode"]
+  else 
+    M.image_mode = "fill"
+  end
 
+  if opts["crop"] then
+    M.crop = opts["crop"]
+  else
+    M.crop = 1
+  end
 
-    
+  if opts["width"] then
+    M.width = opts["width"]
+  else
+    M.width = 16
+  end
+
+  if opts["height"] then
+    M.height = opts["height"]
+  else 
+    M.height = 12
+  end
 end
 
 M.format_args = function()
@@ -89,6 +109,6 @@ M.reload_waifu = function()
   vim.fn.system("deactivate")
 end
 
-vim.cmd([[command! NewWaifu lua M.reload_waifu()]])
+vim.cmd([[command! NewWaifu lua require'waifu'.reload_waifu()]])
 
 return M
