@@ -16,6 +16,7 @@ parser = argparse.ArgumentParser(description="A tool to set your iterm2 backgrou
 
 # Define command-line arguments
 parser.add_argument("-p",  "--img_dir", type=str, default=os.path.expanduser("~/Desktop/waifus"), help="path to dir for saving images")
+parser.add_argument("-z", "--cascade", type=str, default=os.path.expanduser("~/.local/share/nvim/lazy/waifu.nvim/lbp_anime_face_detect.xml"), help="path to cascade classifier sheet for face detection")
 parser.add_argument("-t", "--type", type=str, choices=["sfw", "nsfw"], help="Type of waifu (safe for work or not)", default="sfw")
 parser.add_argument("-c", "--category", type=str, choices=["waifu", "neko", "shinobu","megumin","bully","cuddle","cry","hug","awoo",
                                                           "kiss","lick","pat","smug","bonk","yeet","blush","smile","wave","highfive",
@@ -67,7 +68,7 @@ def crop_face(file_path):
     img = cv2.imread(file_path)
     img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     img_gray = cv2.equalizeHist(img_gray) 
-    face_cascade = cv2.CascadeClassifier(os.path.expanduser('~/.config/nvim/python/lbp_anime_face_detect.xml'))
+    face_cascade = cv2.CascadeClassifier(args["cascade"])
     faces = face_cascade.detectMultiScale(img_gray)
 
     face_bounds = 500
@@ -102,7 +103,7 @@ def crop_save_img(img_content, save_path):
 
 
 
-def get_waifu_png(date) -> str:
+def get_waifu(date) -> str:
     waifu_type = 'sfw'
     category = 'waifu'
     url = f'{API_FOR_WAIFUS}{waifu_type}/{category}'
@@ -129,8 +130,8 @@ def get_waifu_png(date) -> str:
 def get_waifu_path(formatted_date) -> str: 
     daily_waifu = glob.glob(f"{PATH_TO_WAIFU_DIR}/{formatted_date}.*")
     
-    if not daily_waifu or args.generate:
-        daily_waifu = [get_waifu_png(formatted_date)]
+    if not daily_waifu or args.generate != 0:
+        daily_waifu = [get_waifu(formatted_date)]
         
     return daily_waifu[0]
 
