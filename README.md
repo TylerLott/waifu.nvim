@@ -8,7 +8,8 @@ Greet a new waifu each day when opening nvim in iterm2
 ## Usage
 
 lazy.nvim
-'''
+
+```
 local M = {
   "TylerLott/waifu.nvim"
 }
@@ -18,12 +19,13 @@ function M.config()
 end
 
 return M
-'''
+```
 
 ## Options
 
 defaults
-'''
+
+```
 opts = {
 "debug" = false,
 "type" = "sfw",
@@ -34,7 +36,7 @@ opts = {
 "width" = 16,
 "height" = 12,
 }
-'''
+```
 
 ### type 
 - "sfw"
