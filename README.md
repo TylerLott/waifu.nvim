@@ -27,14 +27,14 @@ defaults
 
 ```
 opts = {
-"debug" = false,
-"type" = "sfw",
-"category" = "waifu",
-"blending" = 0.15,
-"image_mode" = "fill",
-"crop" = 1,
-"width" = 16,
-"height" = 12,
+    "debug" = false,
+    "type" = "sfw",
+    "category" = "waifu",
+    "blending" = 0.15,
+    "image_mode" = "fill",
+    "crop" = 1,
+    "width" = 16,
+    "height" = 12,
 }
 ```
 
