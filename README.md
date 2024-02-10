@@ -21,6 +21,19 @@ end
 return M
 ```
 
+## Functions
+
+`:NewWaifu`
+
+- Generates a new waifu for the day using config opts
+
+
+### TODO:
+
+`:NoMaidens` or `:NoWaifu`
+
+- Resets the background to black
+
 ## Options
 
 defaults

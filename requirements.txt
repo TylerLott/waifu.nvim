@@ -1,0 +1,6 @@
+iterm2==2.7
+numpy==1.26.4
+opencv-python==4.9.0.80
+pillow==10.2.0
+protobuf==4.25.2
+websockets==12.0
