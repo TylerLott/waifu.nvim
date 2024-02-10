@@ -29,7 +29,7 @@ M.setup = function(opts)
     vim.fn.system("python3 -m venv " .. M.python_dir)
 
    -- Activate the virtual environment
-    vim.fn.system("source " .. M.python_dir .. "bin/activate")
+    vim.fn.system("source " .. M.python_dir .. "/bin/activate")
 
     -- Install dependencies (if any) from requirements.txt
     vim.fn.system("pip install -r requirements.txt")
@@ -37,7 +37,7 @@ M.setup = function(opts)
   else 
    -- Activate the virtual environment
     M.P("Using existing venv")
-    vim.fn.system("source " .. M.python_dir .. "bin/activate")
+    vim.fn.system("source " .. M.python_dir .. "/bin/activate")
   end
   
   -- Make waifus dir if not exists
@@ -124,7 +124,7 @@ end
 
 M.reload_waifu = function()
   print("loading waifu")
-  vim.fn.system("source " .. M.python_dir .. "bin/activate")
+  vim.fn.system("source " .. M.python_dir .. "/bin/activate")
   local output = vim.fn.system("python3 " .. M.script .. M.format_args() .. " -g 1")
   M.P("Script output: " .. output)
   vim.fn.system("deactivate")
