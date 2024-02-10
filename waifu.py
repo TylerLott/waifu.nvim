@@ -159,7 +159,7 @@ async def main(connection):
         profile=await session.async_get_profile()
         print_v(f"profile: {profile}")
 
-        # await profile.async_set_background_image_location("") # force update
+        await profile.async_set_background_image_location("") # force update
         await profile.async_set_background_image_location(img_path)
         await profile.async_set_blend(args.blending)
         await profile.async_set_background_image_mode(get_image_mode(args.image_mode))
