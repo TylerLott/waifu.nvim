@@ -145,7 +145,7 @@ end
 
 M.show_waifu = function()
   local running_script = "source " .. M.python_dir .. "/bin/activate"
-  running_script = running_script .. "&& python3 " .. M.script .. M.format_args() ..
+  running_script = running_script .. "&& python3 " .. M.script .. M.format_args()
   running_script = running_script .. "&& deactivate"
 
   local output = vim.fn.system(running_script)
