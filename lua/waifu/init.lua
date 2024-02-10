@@ -23,21 +23,18 @@ M.setup = function(opts)
   M.img_dir = cache_path .. "/waifus"
   M.python_dir = cache_path .. "/venv"
   
+  local running_script = ""
+
   -- Activate virtual env
   if vim.fn.isdirectory(M.python_dir) == 0 then
     M.P("Creating new venv")
-    vim.fn.system("python3 -m venv " .. M.python_dir)
-
-   -- Activate the virtual environment
-    vim.fn.system("source " .. M.python_dir .. "/bin/activate")
-
-    -- Install dependencies (if any) from requirements.txt
-    vim.fn.system("pip install -r requirements.txt")
-
+    running_script = running_script .. "python3 -m venv " .. M.python_dir .. " "
+    running_script = running_script .. "&& source " .. M.python_dir .. "/bin/activate "
+    running_script = running_script .. "&& pip install -r requirements.txt "
   else 
    -- Activate the virtual environment
     M.P("Using existing venv")
-    vim.fn.system("source " .. M.python_dir .. "/bin/activate")
+    running_script = running_script .. "source " .. M.python_dir .. "/bin/activate"
   end
   
   -- Make waifus dir if not exists
@@ -49,12 +46,14 @@ M.setup = function(opts)
   M.script = vim.fn.glob(data_path .. '/*/waifu.nvim/waifu.py')
   M.P("Running script from " .. M.script)
   M.P("Running with args: " .. M.format_args())
-  local output = vim.fn.system("python3 " .. M.script .. M.format_args())
-  M.P("Script output: " .. output)
+  running_script = running_script .. "&& python3 " .. M.script .. M.format_args()
 
   -- Deactivate the virtual environment
-  vim.fn.system("deactivate")
+  running_script = running_script .. "&& deactivate"
 
+  -- Run script
+  local output = vim.fn.system(running_script)
+  M.P("Script output: " .. output)
 end
 
 
@@ -118,16 +117,18 @@ M.format_args = function()
   args = args .. " -r " .. M.crop
   args = args .. " -x " .. M.width
   args = args .. " -y " .. M.height
-  args = args .. " -v 1" -- always run python verbose
+  args = args .. " -v 1 " -- always run python verbose
   return args
 end
 
 M.reload_waifu = function()
   print("loading waifu")
-  vim.fn.system("source " .. M.python_dir .. "/bin/activate")
-  local output = vim.fn.system("python3 " .. M.script .. M.format_args() .. " -g 1")
+  local running_script = "source " .. M.python_dir .. "/bin/activate"
+  running_script = running_script .. "&& python3 " .. M.script .. M.format_args() .. "-g 1"
+  running_script = running_script .. "&& deactivate"
+
+  local output = vim.fn.system(running_script)
   M.P("Script output: " .. output)
-  vim.fn.system("deactivate")
   print("done loading waifu")
 end
 
