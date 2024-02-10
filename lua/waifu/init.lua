@@ -116,6 +116,7 @@ M.format_args = function()
   args = args .. " -r " .. M.crop
   args = args .. " -x " .. M.width
   args = args .. " -y " .. M.height
+  args = args .. " -v 1" -- always run python verbose
   return args
 end
 
