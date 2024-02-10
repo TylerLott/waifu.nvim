@@ -30,7 +30,8 @@ parser.add_argument("-m","--image_mode", type=str, default="fill", choices=["fil
 parser.add_argument("-r","--crop", type=int, default=0, choices=[0,1,2], help="try to crop image to fit terminal \n 0 - no crop \n 1 - crop to aspect ratio (set with -h and -w) \n 2 - crop to faces")
 parser.add_argument("-y","--height", type=int, default=10, help="aspect ratio height for crop")
 parser.add_argument("-x","--width", type=int, default=16, help="aspect ratio width for crop")
-parser.add_argument("-g","--generate", type=int, default=0, help="generate a new image for the day")
+parser.add_argument("-g","--generate", action="store_true", help="generate a new image for the day")
+parser.add_argument("--clear", action="store_true", help="clear iterm image")
 
 # Parse the command-line arguments
 args = parser.parse_args()
@@ -148,6 +149,18 @@ def clean_waifu_folder(today_path):
                 print_v(f"Error deleting {file}: {e}")
 
 async def main(connection):
+    if args.clear:
+        print_v("clearing image")
+
+        app = await iterm2.async_get_app(connection)
+        session=app.current_terminal_window.current_tab.current_session
+        profile=await session.async_get_profile()
+
+        print_v(f"profile: {profile}")
+
+        await profile.async_set_background_image_location("") # force update
+        return
+ 
     # Get waifu for the day
     formatted_date = formatted_date = datetime.now().strftime("%Y-%m-%d")
     img_path = get_waifu_path(formatted_date)

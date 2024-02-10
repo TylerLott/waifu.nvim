@@ -122,16 +122,29 @@ M.format_args = function()
 end
 
 M.reload_waifu = function()
-  print("loading waifu")
+  M.P("loading waifu")
   local running_script = "source " .. M.python_dir .. "/bin/activate"
-  running_script = running_script .. "&& python3 " .. M.script .. M.format_args() .. "-g 1"
+  running_script = running_script .. "&& python3 " .. M.script .. M.format_args() .. "-g "
   running_script = running_script .. "&& deactivate"
 
   local output = vim.fn.system(running_script)
   M.P("Script output: " .. output)
-  print("done loading waifu")
+  M.P("done loading waifu")
+end
+
+M.no_maidens = function()
+  M.P("Burning maidens")
+  local running_script = "source " .. M.python_dir .. "/bin/activate"
+  running_script = running_script .. "&& python3 " .. M.script .. M.format_args() .. "--clear "
+  running_script = running_script .. "&& deactivate"
+
+  local output = vim.fn.system(running_script)
+  M.P("Script output: " .. output)
+  M.P("you are maidenless")
 end
 
 vim.cmd([[command! NewWaifu lua require'waifu'.reload_waifu()]])
+vim.cmd([[command! NoMaidens lua require'waifu'.no_maidens()]])
+vim.cmd([[command! NoWaifu lua require'waifu'.no_maidens()]])
 
 return M
