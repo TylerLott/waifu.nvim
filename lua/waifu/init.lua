@@ -122,7 +122,8 @@ end
 M.reload_waifu = function()
   print("loading waifu")
   vim.fn.system("source " .. M.python_dir .. "bin/activate")
-  vim.fn.system("python3 " .. M.script .. M.format_args() .. " -g 1")
+  local output = vim.fn.system("python3 " .. M.script .. M.format_args() .. " -g 1")
+  M.P("Script output: " .. output)
   vim.fn.system("deactivate")
   print("done loading waifu")
 end
