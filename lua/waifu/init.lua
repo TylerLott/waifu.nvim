@@ -34,13 +34,15 @@ M.setup = function(opts)
     -- Install dependencies (if any) from requirements.txt
     vim.fn.system("pip install -r requirements.txt")
 
-    -- Make waifus dir if not exists
-    vim.fn.mkdir(M.img_dir)
-
   else 
    -- Activate the virtual environment
     M.P("Using existing venv")
     vim.fn.system("source " .. M.python_dir .. "bin/activate")
+  end
+  
+  -- Make waifus dir if not exists
+  if vim.fn.isdirectory(M.img_dir) == 0 then
+    vim.fn.mkdir(M.img_dir)
   end
 
   -- Run the Python script
