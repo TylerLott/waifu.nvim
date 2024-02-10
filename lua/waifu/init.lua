@@ -143,8 +143,18 @@ M.no_maidens = function()
   M.P("you are maidenless")
 end
 
+M.show_waifu = function()
+  local running_script = "source " .. M.python_dir .. "/bin/activate"
+  running_script = running_script .. "&& python3 " .. M.script .. M.format_args() ..
+  running_script = running_script .. "&& deactivate"
+
+  local output = vim.fn.system(running_script)
+  M.P("Script output: " .. output)
+end
+
 vim.cmd([[command! NewWaifu lua require'waifu'.reload_waifu()]])
 vim.cmd([[command! NoMaidens lua require'waifu'.no_maidens()]])
 vim.cmd([[command! NoWaifu lua require'waifu'.no_maidens()]])
+vim.cmd([[command! ShowWaifu lua require'waifu'.show_waifu()]])
 
 return M
