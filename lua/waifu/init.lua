@@ -12,6 +12,7 @@ M.setup = function(opts)
 
   local data_path = vim.fn.stdpath("data")
 
+  local waifu_path = vim.fn.glob(data_path .. "/nvim/share/nvim/*/waifu.nvim")
   local cascade = vim.fn.glob(data_path .. "/*/waifu.nvim/lbp_anime_face_detect.xml")
   M.cascade = cascade
 
@@ -30,7 +31,7 @@ M.setup = function(opts)
     M.P("Creating new venv")
     running_script = running_script .. "python3 -m venv " .. M.python_dir .. " "
     running_script = running_script .. "&& source " .. M.python_dir .. "/bin/activate "
-    running_script = running_script .. "&& pip install -r requirements.txt "
+    running_script = running_script .. "&& pip install -r " .. waifu_path .. "/requirements.txt "
   else 
    -- Activate the virtual environment
     M.P("Using existing venv")
